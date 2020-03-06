@@ -14,15 +14,17 @@ defmodule ChirperWeb.Router do
   end
 
   scope "/", ChirperWeb do
-    pipe_through [:browser, ChirperWeb.Plugs.Guest]
+    pipe_through :browser
+    pipe_through ChirperWeb.Plugs.Guest
 
-    resources "/register", UserController, only: [:create, :new, :index, :show]
+    resources "/register", UserController, only: [:create, :new, :index]
     get "/login", SessionController, :new
     post "/login", SessionController, :create
   end
 
   scope "/", ChirperWeb do
-    pipe_through [:browser, ChirperWeb.Plugs.Auth]
+    pipe_through :browser
+    pipe_through ChirperWeb.Plugs.Auth
 
     delete "/logout", SessionController, :delete
 
