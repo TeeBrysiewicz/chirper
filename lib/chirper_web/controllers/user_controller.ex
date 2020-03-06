@@ -9,6 +9,12 @@ defmodule ChirperWeb.UserController do
     render(conn, "new.html", changeset: changeset)
   end
 
+  def show(conn, %{"id" => id}) do
+    changeset = Accounts.change_user(%User{})
+    user = Accounts.get_user!(id)
+    render(conn, "show.html", changeset: changeset)
+  end
+
   def create(conn, %{"user" => user_params}) do
     case Accounts.create_user(user_params) do
       {:ok, user} ->
